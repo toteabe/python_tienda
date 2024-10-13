@@ -23,6 +23,7 @@ from sqlalchemy.orm import Session
 from fabricante import Fabricante
 from producto import Producto
 
+
 def findAllFabs():
     connection_string = "mysql+mysqlconnector://root:secret@127.0.0.1:3306/tienda"
     engine = create_engine(connection_string, echo=True)
@@ -31,11 +32,10 @@ def findAllFabs():
         stmt=select(Fabricante)
         fabricantes=session.scalars(stmt)
 
-        fabs=[]
-        for fabricante in fabricantes:
-            fabs.append(fabricante)
+        fabs=[f for f in fabricantes]
 
     return fabs
+
 
 def findAllProds():
     connection_string = "mysql+mysqlconnector://root:secret@127.0.0.1:3306/tienda"
@@ -45,13 +45,11 @@ def findAllProds():
         stmt=select(Producto)
         productos=session.scalars(stmt)
     
-        prods=[]
-        for producto in productos:
-            prods.append(producto)
-
+        prods=[p for p in productos]
+        
     return prods;
 
-#1. Lista los nombres y los precios de todos los productos de la tabla producto
+
 def testFabs():
 
         fabs = findAllFabs()
@@ -65,8 +63,7 @@ def testFabs():
             print(f)
 
         print(">>fabsSolComprehension:")
-        for f in fabsSolComprehension:
-            print(f)
+        print(fabsSolComprehension)
 
 testFabs()
 
@@ -84,11 +81,11 @@ def testProds():
             print(prod)
 
         print(">>prodsSolComprehension:")
-        for prod in prodsSolComprehension:
-            print(prod)
+        print(prodsSolComprehension)
     
 
 testProds()
+
 
 #1. Lista los nombres y los precios de todos los productos de la tabla producto
 def test1():
