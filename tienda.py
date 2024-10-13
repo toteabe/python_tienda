@@ -23,11 +23,11 @@ from sqlalchemy.orm import Session
 from modelo.fabricante import Fabricante
 from modelo.producto import Producto
 
+connection_string = "mysql+mysqlconnector://root:secret@127.0.0.1:3306/tienda"
+engine = create_engine(connection_string, echo=True)
 
 def findAllFabs():
-    connection_string = "mysql+mysqlconnector://root:secret@127.0.0.1:3306/tienda"
-    engine = create_engine(connection_string, echo=True)
-
+    
     with Session(engine) as session:
         stmt=select(Fabricante)
         fabricantes=session.scalars(stmt)
@@ -38,8 +38,6 @@ def findAllFabs():
 
 
 def findAllProds():
-    connection_string = "mysql+mysqlconnector://root:secret@127.0.0.1:3306/tienda"
-    engine = create_engine(connection_string, echo=True)
 
     with Session(engine) as session:
         stmt=select(Producto)
