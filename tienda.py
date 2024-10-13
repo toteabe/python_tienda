@@ -23,9 +23,7 @@ from sqlalchemy.orm import Session
 from fabricante import Fabricante
 from producto import Producto
 
-#1. Lista los nombres y los precios de todos los productos de la tabla producto
-def test1():
-
+def findAllFabs():
     connection_string = "mysql+mysqlconnector://root:secret@127.0.0.1:3306/tienda"
     engine = create_engine(connection_string, echo=True)
 
@@ -37,17 +35,61 @@ def test1():
         for fabricante in fabricantes:
             fabs.append(fabricante)
 
+    return fabs
+
+def findAllProds():
+    connection_string = "mysql+mysqlconnector://root:secret@127.0.0.1:3306/tienda"
+    engine = create_engine(connection_string, echo=True)
+
+    with Session(engine) as session:
         stmt=select(Producto)
         productos=session.scalars(stmt)
+    
         prods=[]
         for producto in productos:
             prods.append(producto)
 
-        prods = list(map(lambda p : (p.nombre, p.precio), prods))
-        #list comprehension
-        prods = [(p.nombre, p.precio) for p in prods]
+    return prods;
 
-        for prod in prods:
+#1. Lista los nombres y los precios de todos los productos de la tabla producto
+def testFabs():
+
+        fabs = findAllFabs()
+    
+        fabsSolLambda = list(map(lambda f : f.nombre, fabs))
+        #list comprehension
+        fabsSolComprehension = [ f.nombre for f in fabs]
+
+        print(">>fabsSolLambda:")
+        for f in fabsSolLambda:
+            print(f)
+
+        print(">>fabsSolComprehension:")
+        for f in fabsSolComprehension:
+            print(f)
+
+testFabs()
+
+
+def testProds():
+
+        prods = findAllProds()
+
+        prodsSolLambda = list(map(lambda p : (p.nombre, p.precio), prods))
+        #list comprehension
+        prodsSolComprehension = [(p.nombre, p.precio) for p in prods]
+
+        print(">>prodsSolLambda:")
+        for prod in prodsSolLambda:
             print(prod)
 
-test1()
+        print(">>prodsSolComprehension:")
+        for prod in prodsSolComprehension:
+            print(prod)
+    
+
+testProds()
+
+#1. Lista los nombres y los precios de todos los productos de la tabla producto
+def test1():
+    pass
