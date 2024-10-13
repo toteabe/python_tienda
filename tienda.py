@@ -1,3 +1,4 @@
+#INSTALACION
 #sudo apt install pip
 #sudo apt install python3.12-venv
 #python3.12 -m venv env
@@ -21,19 +22,32 @@ from sqlalchemy import create_engine, select
 from sqlalchemy.orm import Session
 from fabricante import Fabricante
 from producto import Producto
-connection_string = "mysql+mysqlconnector://root:secret@127.0.0.1:3306/tienda"
-engine = create_engine(connection_string, echo=True)
 
-with Session(engine) as session:
-    stmt=select(Fabricante)
-    fabricantes=session.scalars(stmt)
+#1. Lista los nombres y los precios de todos los productos de la tabla producto
+def test1():
 
-    for fabricante in fabricantes:
-        print(fabricante)
+    connection_string = "mysql+mysqlconnector://root:secret@127.0.0.1:3306/tienda"
+    engine = create_engine(connection_string, echo=True)
 
+    with Session(engine) as session:
+        stmt=select(Fabricante)
+        fabricantes=session.scalars(stmt)
 
-    stmt=select(Producto)
-    productos=session.scalars(stmt)
-    for producto in productos:
-        print(producto)
+        fabs=[]
+        for fabricante in fabricantes:
+            fabs.append(fabricante)
 
+        stmt=select(Producto)
+        productos=session.scalars(stmt)
+        prods=[]
+        for producto in productos:
+            prods.append(producto)
+
+        prods = list(map(lambda p : (p.nombre, p.precio), prods))
+        #list comprehension
+        prods = [(p.nombre, p.precio) for p in prods]
+
+        for prod in prods:
+            print(prod)
+
+test1()
