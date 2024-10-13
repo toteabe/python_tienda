@@ -20,8 +20,8 @@
 
 from sqlalchemy import create_engine, select
 from sqlalchemy.orm import Session
-from fabricante import Fabricante
-from producto import Producto
+from modelo.fabricante import Fabricante
+from modelo.producto import Producto
 
 
 def findAllFabs():
